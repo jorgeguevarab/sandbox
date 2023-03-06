@@ -48,9 +48,11 @@ def calculate():
 
 #Run function
 def run():
+    calculate()
+
+
     while True:
-        
-        res = input("¿Deseas realizar un nuevo cálculo? ")
+        res = input("¿Deseas realizar un nuevo cálculo? \n(Presiona 'S' para sí y cualquier tecla para cancelar.) ")
         if res.lower() == "s":
             calculate()
         else:
