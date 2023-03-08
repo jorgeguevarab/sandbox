@@ -6,7 +6,10 @@ def main(page: ft.Page):
     
     
     def agrega_num(e):
-        print(e.value)
+        
+        print(e.control.data)
+        n.value = n.value + str(e.control.data)
+        page.update()
     
     def operacion(e):
         print("Se define una operación")
@@ -19,13 +22,28 @@ def main(page: ft.Page):
     page.add(ft.Row(controls=[ft.ElevatedButton(text="*", on_click=operacion),ft.ElevatedButton(text="/", on_click=operacion)]))
     #page.add(t, n, btn_plus, btn_minus, btn_multiple, btn_div)
     
-    controls = []
+    numbers = []
     
-    for i in range(0,10):
-        controls.append(ft.ElevatedButton(text=str(i), on_click=agrega_num))
     
-        page.add(controls[i])   
+    for i in range(0,10,3):
+        for j in range(3):
+            
+            numbers.append(
+                    ft.ElevatedButton(text=str(i + j), on_click=agrega_num, data=i+j)
+                )
+            
+            if i + j == 9:
+                break
+            
+    for k in range(0,10,3):    
+        page.add(ft.Row(controls=numbers[k:(k+3)]))
+                
+        page.update()    
+                    
+    
+    #INICIO NUMBERS
    
+    #END NUMBERS
     
     page.update()
     
