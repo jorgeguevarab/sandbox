@@ -1,26 +1,52 @@
 import flet as ft
 
+def main(page: ft.Page):
+    
+    def items(count):
+        items = []
+        for i in range(0, count):
+            items.append(
+                ft.Container(
+                    content=ft.ElevatedButton(text=str(i)),
+                    alignment=ft.alignment.center,
+                    width=40,
+                    height=40,
+                    border_radius=ft.border_radius.all(0),
+                )
+            )
+        return items
 
-def main(page):
+    def slider_change(e):
+        row.width = float(e.control.value)
+        row.update()
 
-    first_name = ft.Ref[ft.TextField]()
-    last_name = ft.Ref[ft.TextField]()
-    greetings = ft.Ref[ft.Column]()
+    width_slider = ft.Slider(
+        min=0,
+        max=page.window_width,
+        divisions=20,
+        value=page.window_width,
+        label="{value}",
+        on_change=slider_change,
+    )
 
-    def btn_click(e):
-        greetings.current.controls.append(
-            ft.Text(f"Hello, {first_name.current.value} {last_name.current.value}!")
-        )
-        first_name.current.value = ""
-        last_name.current.value = ""
-        page.update()
-        first_name.current.focus()
+    row = ft.Row(
+        wrap=True,
+        spacing=10,
+        run_spacing=10,
+        controls=items(10),
+        width=page.window_width,
+    )
 
     page.add(
-        ft.TextField(ref=first_name, label="First name", autofocus=True),
-        ft.TextField(ref=last_name, label="Last name"),
-        ft.ElevatedButton("Say hello!", on_click=btn_click),
-        ft.Column(ref=greetings),
+        ft.Column(
+            [
+                ft.Text(
+                    "Change the row width to see how child items wrap onto multiple rows:"
+                ),
+                width_slider,
+            ]
+        ),
+        row,
     )
 
 ft.app(target=main)
