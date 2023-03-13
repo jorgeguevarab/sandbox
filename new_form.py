@@ -1,52 +1,60 @@
 import flet as ft
 
 def main(page: ft.Page):
-    
-    def items(count):
-        items = []
-        for i in range(0, count):
-            items.append(
-                ft.Container(
-                    content=ft.ElevatedButton(text=str(i)),
-                    alignment=ft.alignment.center,
-                    width=40,
-                    height=40,
-                    border_radius=ft.border_radius.all(0),
-                )
-            )
-        return items
-
-    def slider_change(e):
-        row.width = float(e.control.value)
-        row.update()
-
-    width_slider = ft.Slider(
-        min=0,
-        max=page.window_width,
-        divisions=20,
-        value=page.window_width,
-        label="{value}",
-        on_change=slider_change,
-    )
-
-    row = ft.Row(
-        wrap=True,
-        spacing=10,
-        run_spacing=10,
-        controls=items(10),
-        width=page.window_width,
-    )
+    page.title = "Containers - clickable and not"
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
 
     page.add(
-        ft.Column(
+        ft.Row(
             [
-                ft.Text(
-                    "Change the row width to see how child items wrap onto multiple rows:"
+                ft.Container(
+                    content=ft.Text("Non clickable"),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    bgcolor=ft.colors.AMBER,
+                    width=150,
+                    height=150,
+                    border_radius=10,
                 ),
-                width_slider,
-            ]
+                ft.Container(
+                    content=ft.Text("Clickable without Ink"),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    bgcolor=ft.colors.GREEN_200,
+                    width=150,
+                    height=150,
+                    border_radius=10,
+                    on_click=lambda e: print("Clickable without Ink clicked!"),
+                ),
+                ft.Container(
+                    content=ft.Text("Clickable with Ink"),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    bgcolor=ft.colors.CYAN_200,
+                    width=150,
+                    height=150,
+                    border_radius=10,
+                    ink=True,
+                    on_click=lambda e: print("Clickable with Ink clicked!"),
+                ),
+                ft.Container(
+                    content=ft.Text("Clickable transparent with Ink"),
+                    margin=10,
+                    padding=10,
+                    alignment=ft.alignment.center,
+                    width=150,
+                    height=150,
+                    border_radius=10,
+                    ink=True,
+                    on_click=lambda e: print("Clickable transparent with Ink clicked!"),
+                ),
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
         ),
-        row,
     )
 
 ft.app(target=main)
