@@ -16,7 +16,7 @@ def main(page: ft.Page):
         global eval_string, on_calc        
         
                 
-        if n.value.__contains__(".") and e.control.data ==".":
+        if ("." in n.value) and e.control.data ==".":
             pass
         else:
             
